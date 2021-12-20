@@ -7,7 +7,7 @@ pool:
   - npm
 
 variables:
-  releasebuildConfiguration: 'Release'
+  buildConfiguration: 'Release'
   wwwrootDir: 'Tailspin.SpaceGame.Web/wwwroot' 
   dotnetSDK: '5.x'
 
@@ -33,28 +33,22 @@ steps:
   displayName: 'Write build info'
   workingDirectory: $(wwwrootDir)
 
+
 - task: DotNetCoreCLI@2
   displayName: 'Restore project dependencies'
   inputs:
     command: 'restore'
     projects: '**/*.csproj'
 
-- task: DotNetCoreCLI@2
-  displayName: 'Build the project $(releasebuildConfiguration) Configuration - $(releasebuildConfiguration)'
-  inputs:
-    command: 'build'
-    arguments: '--no-restore --configuration $(releasebuildConfiguration)'
-    projects: '**/*.csproj'
+#Build multiple builds configurations by using templates.
 
-- task: DotNetCoreCLI@2
-  displayName: 'Publish project $(releasebuildConfiguration) Configuration - $(releasebuildConfiguration)'
-  inputs:
-    command: 'publish'
-    projects: '**/*.csproj'
-    publishWebProjects: false
-    arguments: '--no-build --configuration $(releasebuildConfiguration) --output $(Build.ArtifactStagingDirectory)/$(releasebuildConfiguration)'
-    zipAfterPublish: true
+- template: templates/build.yml
+  parameters:
+    buildConfiguration: 'Debug'
 
+- template: templates/build.yml
+  parameters:
+    buildConfiguration: 'Release'
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: drop'
