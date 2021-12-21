@@ -1,3 +1,4 @@
+[![Build Status](https://dev.azure.com/DCMORA/Space%20-%20Game%20-%20Web%20-%20Git%20Workflow/_apis/build/status/mslearn-tailspin-spacegame-web?branchName=build-pipeline)](https://dev.azure.com/DCMORA/Space%20-%20Game%20-%20Web%20-%20Git%20Workflow/_build/latest?definitionId=7&branchName=build-pipeline)
 
 # Contributing
 
