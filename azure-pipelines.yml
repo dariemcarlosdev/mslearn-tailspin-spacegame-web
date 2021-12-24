@@ -51,7 +51,7 @@ steps:
     scannerMode: 'MsBuild'
     ProjectKey:  $(SonarProjectKey)
     ProjectName: $(SonarProjectName)
-    ProjectVersion: '$(Build.BuildNumber)''
+    ProjectVersion: $(Build.BuildNumber)
     extraProperties: | 
       sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/TestResults/Coverage/coverage.opencover.xml
       sonar.exclusions= **/*/wwwroot/lib/**/*
