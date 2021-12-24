@@ -17,11 +17,6 @@ steps:
   inputs:
     version: '$(dotnetSdkVersion)'
 
-- task: UseDotNet@2
-  displayName: 'Use .NET Core SDK 2.1.505 for SonarCLoud'
-  inputs:
-    version: '2.1.505'
-
 - task: Npm@1
   displayName: 'Run npm install'
   inputs:
@@ -42,19 +37,6 @@ steps:
   inputs:
     command: 'restore'
     projects: '**/*.csproj'
-
-- task: SonarCloudPrepare@1
-  displayName: 'Prepare Sonar Cloud Analysis'
-  inputs:
-    SonarCloud: 'Sonar Cloud Security Scan'
-    organization: '$(SonarOrganization)'
-    scannerMode: 'MsBuild'
-    ProjectKey:  '$(SonarProjectKey)'
-    ProjectName: '$(SonarProjectName)'
-    ProjectVersion: '$(Build.BuildNumber)'
-    extraProperties: |
-      sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/TestResults/Coverage/
-      sonar.exclusions=**/wwwroot/lib/**/*
 
 - task: DotNetCoreCLI@2
   displayName: 'Build the project - $(buildConfiguration)'
@@ -81,12 +63,6 @@ steps:
 - script: |
     reportgenerator -reports:$(Build.SourcesDirectory)/**/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/CodeCoverage -reporttypes:HtmlInline_AzurePipelines
   displayName: 'Create code coverage report'
-
-- task: SonarCloudAnalyze@1
-  displayName: "Run SonarCloud code analysis"
-
-- task: SonarCloudPublish@1
-  displayName: "Publish SonarCloud quality gate results"
 
 - task: PublishCodeCoverageResults@1
   displayName: 'Publish code coverage report'
