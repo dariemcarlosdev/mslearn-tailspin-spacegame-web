@@ -18,7 +18,7 @@ steps:
     version: '$(dotnetSdkVersion)'
 
 - task: UseDotNet@2
-  displayName: 'Use .NET Core SDK 2.1.505 foR SonarCLoud'
+  displayName: 'Use .NET Core SDK 2.1.505 for SonarCLoud'
   inputs:
     version: '2.1.505'
 
@@ -52,9 +52,9 @@ steps:
     ProjectKey:  '$(SonarProjectKey)'
     ProjectName: '$(SonarProjectName)'
     ProjectVersion: '$(Build.BuildNumber)'
-    extraProperties: 
-      sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/TestResults/Coverage/coverage.opencover.xml
-      sonar.exclusions= **/*/wwwroot/lib/**/*
+    extraProperties: |
+      sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/TestResults/Coverage/
+      sonar.exclusions=**/wwwroot/lib/**/*
 
 - task: DotNetCoreCLI@2
   displayName: 'Build the project - $(buildConfiguration)'
